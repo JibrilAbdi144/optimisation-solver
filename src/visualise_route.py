@@ -21,7 +21,10 @@ def visualiseRoute(depot, customers, routes, distance_matrix):
                 weight=2
             ).add_to(london_map)
 
-    folium.Marker(location=[depot["latitude"], depot["longitude"]]).add_to(london_map)
+    folium.Marker(
+        location=[depot["latitude"], depot["longitude"]],
+        popup="Depot (Charing Cross)"
+    ).add_to(london_map)
     for index, customer in enumerate(customers):
         folium.Marker(
             location=[customer["latitude"], customer["longitude"]],

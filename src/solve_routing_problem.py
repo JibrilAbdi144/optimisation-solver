@@ -24,7 +24,7 @@ def solveTransportProblem(data_model: dict):
         dimension_name
     )
     distance_dimension = routing_model.GetDimensionOrDie(dimension_name=dimension_name)
-    distance_dimension.SetGlobalSpanCostCoefficient(1000)
+    #distance_dimension.SetGlobalSpanCostCoefficient(1000)
 
     # def capacityCallback(from_index, to_index):
     #     from_node = routing_index_manager.IndexToNode(from_index)
@@ -38,6 +38,19 @@ def solveTransportProblem(data_model: dict):
     #     True,
     #     "Capacity"
     # )
+
+    def capacityCallback(from_index):
+        from_node = routing_index_manager.IndexToNode(from_index)
+        return data_model["demands"][from_node]
+    capacity_callback_index = routing_model.RegisterUnaryTransitCallback(capacityCallback)
+
+    routing_model.AddDimension(
+        capacity_callback_index,
+        0,
+        data_model["vehicle_capacities"][0],
+        True,
+        "Capacity"
+    )
 
     search_parameters = pywrapcp.DefaultRoutingSearchParameters()
     search_parameters.first_solution_strategy = (

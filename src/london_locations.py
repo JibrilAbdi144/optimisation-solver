@@ -33,7 +33,8 @@ def generateCustomerCoords(customer_number: int=10) -> list[dict[str, float | fl
             points.append(point)
     return [{
         "latitude": point.y,
-        "longitude": point.x
+        "longitude": point.x,
+        "demand": np.random.randint(1, 10)
     } for point in points]
 
 
